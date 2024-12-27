@@ -46,9 +46,23 @@ class AccessibilityAnalyzerTest extends TestCase
             // Assert the response includes expected issues for the uploaded HTML.
             ->assertJson([
                 'issues' => [
-                    ['type' => 'error', 'message' => 'Image missing alt attribute', 'element' => 'img'],
-                    ['type' => 'warning', 'message' => 'Skipped heading level: from h1 to h3', 'element' => 'h3']
-                ]
+                    [
+                        'type' => 'error',
+                        'message' => 'Image missing alt attribute',
+                        'element' => '/html/body/img',
+                        'wcagRef' => [
+                            'id' => '1.1.1',
+                            'url' => 'https://www.w3.org/WAI/WCAG21/Understanding/non-text-content',
+                            'level' => 'A',
+                        ],
+                    ],
+                    [
+                        'type' => 'warning',
+                        'message' => 'Skipped heading level: from h1 to h3',
+                        'element' => '/html/body/h3',
+                    ],
+                    // Include additional expected issues if necessary
+                ],
             ]);
     }
 
