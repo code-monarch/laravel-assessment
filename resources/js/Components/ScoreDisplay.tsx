@@ -19,15 +19,15 @@ export const ScoreDisplay: FC<Pick<AnalysisResult, 'summary' | 'score'>> = ({ sc
             <div className="mt-4 grid grid-cols-3 gap-4 text-center">
                 <div>
                     <p className="text-sm text-gray-500">Errors</p>
-                    <p className="text-xl font-semibold text-red-600">{summary.errors}</p>
+                    <p className="text-xl font-semibold text-red-600">{summary.errors ?? 0}</p>
                 </div>
                 <div>
                     <p className="text-sm text-gray-500">Warnings</p>
-                    <p className="text-xl font-semibold text-yellow-600">{summary.warnings}</p>
+                    <p className="text-xl font-semibold text-yellow-600">{summary.warnings ?? 0}</p>
                 </div>
                 <div>
                     <p className="text-sm text-gray-500">Total Issues</p>
-                    <p className="text-xl font-semibold">{summary.total}</p>
+                    <p className="text-xl font-semibold">{summary.total ?? 0}</p>
                 </div>
             </div>
         </div>

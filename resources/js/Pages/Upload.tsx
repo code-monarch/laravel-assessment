@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { FC, useState } from 'react';
 import { FileUploader } from '@/Components/FileUploader';
 import { IssuesList } from '@/Components/IssuesList';
 import { AccessibilityIssue, AnalysisResult } from '@/types';
@@ -8,7 +8,7 @@ import { cn } from '@/lib/utils';
 import { analyzeHtml } from '@/services/api';
 import { ScoreDisplay } from '@/Components/ScoreDisplay';
 
-const UploadPage: React.FC = () => {
+const UploadPage: FC = () => {
     const [issues, setIssues] = useState<AccessibilityIssue[]>([]);
     const [accessibilityScore, setAccessibilityScore] = useState<number | null>(null);
     const [loading, setLoading] = useState(false);
@@ -28,11 +28,10 @@ const UploadPage: React.FC = () => {
             const { score, issues, summary } = response;
             setAccessibilityScore(score);
             setIssues(issues);
-            if (summary !== null) {
-                setSummary({ summary });
-            }
+            setSummary({ summary });
         } catch (err: any) {
             setError(err.response?.data?.message || 'Failed to analyze the file.');
+            console.log("ERROR: ", err)
         } finally {
             setLoading(false);
         }
