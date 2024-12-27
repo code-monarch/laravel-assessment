@@ -34,8 +34,8 @@ A professional web application that analyzes HTML files for WCAG 2.1 compliance 
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/code-monarch/laravel-assignment
-cd laravel-assignment
+git clone https://github.com/code-monarch/laravel-assessment
+cd laravel-assessment
 ```
 
 2. Install PHP dependencies:
@@ -56,11 +56,7 @@ php artisan key:generate
 
 5. Start development servers:
 ```bash
-# Terminal 1: Laravel API
-php artisan serve
-
-# Terminal 2: Vue frontend
-npm run dev
+composer run dev 
 ```
 
 ## Architecture

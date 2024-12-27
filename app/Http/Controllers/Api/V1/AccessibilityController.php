@@ -11,7 +11,7 @@ class AccessibilityController extends Controller
     public function analyze(Request $request): JsonResponse
     {
         $request->validate([
-            'file' => 'required|file|mimes:html,htm'
+            'file' => 'required|file|mimes:html,htm' // Allow only HTML files
         ]);
 
         $content = file_get_contents($request->file('file')->path());

@@ -39,7 +39,7 @@ const UploadPage: React.FC = () => {
     };
 
     return (
-        <div className="w-full container mx-auto p-8">
+        <div className="w-full md:container mx-auto p-8">
             <h1 className="text-2xl font-bold mb-6">Upload an HTML File</h1>
             <FileUploader onFileSelect={handleFileSelect} />
 
