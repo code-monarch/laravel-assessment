@@ -38,7 +38,7 @@ const UploadPage: FC = () => {
     };
 
     return (
-        <div className="w-full md:container mx-auto p-8">
+        <div className="w-full max-w-[500px] mx-auto p-8">
             <h1 className="text-2xl font-bold mb-6">Upload an HTML File</h1>
             <FileUploader onFileSelect={handleFileSelect} />
 
@@ -46,7 +46,7 @@ const UploadPage: FC = () => {
             {error && <p className="mt-4 text-red-600">{error}</p>}
 
             {accessibilityScore !== null && (
-                <div className="mt-6">
+                <div className="w-full max-w-[500px] mt-6">
                     <h2 className="text-lg font-semibold">Accessibility Score</h2>
                     <p
                         className={cn('text-2xl font-bold', accessibilityScore >= 80
