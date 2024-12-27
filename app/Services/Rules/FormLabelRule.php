@@ -21,16 +21,24 @@ class FormLabelRule extends BaseAccessibilityRule
     {
         $issues = [];
         $xpath = new \DOMXPath($dom);
-        
+
+        // Query all form controls except hidden inputs
         $inputs = $xpath->query('//input[@type!="hidden"]|//select|//textarea');
+
         foreach ($inputs as $input) {
-            if (!$input->hasAttribute('id') || 
-                !$xpath->query("//label[@for='{$input->getAttribute('id')}']")->length) {
-                $issues[] = $this->createIssue(
-                    'error',
-                    'Form control missing associated label',
-                    $input->getNodePath()
-                );
+            // Ensure the node is a DOMElement
+            if ($input instanceof \DOMElement) {
+                // Check if the element has an 'id' attribute
+                if (
+                    !$input->hasAttribute('id') ||
+                    !$xpath->query("//label[@for='{$input->getAttribute('id')}']")->length
+                ) {
+                    $issues[] = $this->createIssue(
+                        'error',
+                        'Form control missing associated label',
+                        $input->getNodePath()
+                    );
+                }
             }
         }
 

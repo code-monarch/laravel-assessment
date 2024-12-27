@@ -14,14 +14,17 @@ class ColorContrastRule implements AccessibilityRuleInterface
         $elements = $dom->getElementsByTagName('*');
 
         foreach ($elements as $element) {
-            if ($element->hasAttribute('style')) {
-                $style = $element->getAttribute('style');
-                if (strpos($style, 'color') !== false || strpos($style, 'background') !== false) {
-                    $issues[] = [
-                        'type' => 'warning',
-                        'message' => 'Element uses inline styles - verify color contrast meets WCAG guidelines',
-                        'element' => $element->getNodePath()
-                    ];
+            // Ensure the node is an instance of DOMElement
+            if ($element instanceof \DOMElement) {
+                if ($element->hasAttribute('style')) {
+                    $style = $element->getAttribute('style');
+                    if (strpos($style, 'color') !== false || strpos($style, 'background') !== false) {
+                        $issues[] = [
+                            'type' => 'warning',
+                            'message' => 'Element uses inline styles - verify color contrast meets WCAG guidelines',
+                            'element' => $element->getNodePath()
+                        ];
+                    }
                 }
             }
         }

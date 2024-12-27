@@ -1,25 +1,37 @@
 <?php
 
- namespace App\Http\Controllers\Api\V1;
+namespace App\Http\Controllers\Api\V1;
 
 use App\Services\AccessibilityAnalyzer;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
+use App\Http\Controllers\Controller;
+use App\Services\Rules\RuleRegistry;
+use App\Services\Scoring\AccessibilityScoreCalculator;
 
 class AccessibilityController extends Controller
 {
     public function analyze(Request $request): JsonResponse
     {
+        // Validate the uploaded file
         $request->validate([
-            'file' => 'required|file|mimes:html,htm' // Allow only HTML files
+            'file' => 'required|file|mimes:html,htm', // Allow only HTML files
         ]);
 
+        // Read the content of the uploaded file
         $content = file_get_contents($request->file('file')->path());
-        $analyzer = new AccessibilityAnalyzer($content);
-        
-        return response()->json([
-            'score' => $analyzer->calculateScore(),
-            'issues' => $analyzer->getIssues()
-        ]);
+
+        // Instantiate required dependencies
+        $ruleRegistry = app(RuleRegistry::class); // Resolve RuleRegistry from the container
+        $scoreCalculator = app(AccessibilityScoreCalculator::class); // Resolve AccessibilityScoreCalculator from the container
+
+        // Create an instance of AccessibilityAnalyzer
+        $analyzer = new AccessibilityAnalyzer($ruleRegistry, $scoreCalculator);
+
+        // Analyze the file content
+        $analysisResult = $analyzer->analyze($content);
+
+        // Return the response in JSON format
+        return response()->json($analysisResult);
     }
 }

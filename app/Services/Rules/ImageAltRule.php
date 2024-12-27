@@ -4,6 +4,7 @@ namespace App\Services\Rules;
 
 use App\Services\Rules\Base\BaseAccessibilityRule;
 use DOMDocument;
+use DOMElement;
 
 class ImageAltRule extends BaseAccessibilityRule
 {
@@ -23,18 +24,21 @@ class ImageAltRule extends BaseAccessibilityRule
         $images = $dom->getElementsByTagName('img');
 
         foreach ($images as $img) {
-            if (!$img->hasAttribute('alt')) {
-                $issues[] = $this->createIssue(
-                    'error',
-                    'Image missing alt attribute',
-                    $img->getNodePath()
-                );
-            } elseif ($img->getAttribute('alt') === '') {
-                $issues[] = $this->createIssue(
-                    'warning',
-                    'Image has empty alt attribute - ensure this is intentional for decorative images',
-                    $img->getNodePath()
-                );
+            // Ensure the node is a DOMElement
+            if ($img instanceof DOMElement) {
+                if (!$img->hasAttribute('alt')) {
+                    $issues[] = $this->createIssue(
+                        'error',
+                        'Image missing alt attribute',
+                        $img->getNodePath() ?: 'unknown'
+                    );
+                } elseif (trim($img->getAttribute('alt')) === '') {
+                    $issues[] = $this->createIssue(
+                        'warning',
+                        'Image has empty alt attribute - ensure this is intentional for decorative images',
+                        $img->getNodePath() ?: 'unknown'
+                    );
+                }
             }
         }
 

@@ -2,6 +2,7 @@
 
 namespace App\Services\Rules\Base;
 
+use App\Services\Rules\AccessibilityRuleInterface;
 use App\Services\Rules\WCAGGuideline;
 use DOMDocument;
 
