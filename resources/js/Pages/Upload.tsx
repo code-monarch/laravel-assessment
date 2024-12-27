@@ -15,6 +15,8 @@ const UploadPage: FC = () => {
     const [error, setError] = useState<string | null>(null);
     const [summary, setSummary] = useState<Pick<AnalysisResult, 'summary'> | null>(null);
 
+    console.log("SUMMARY: ", summary)
+
     const handleFileSelect = async (file: File) => {
         setLoading(true);
         setError(null);
@@ -38,35 +40,24 @@ const UploadPage: FC = () => {
     };
 
     return (
-        <div className="w-full max-w-[500px] mx-auto p-8">
-            <h1 className="text-2xl font-bold mb-6">Upload an HTML File</h1>
-            <FileUploader onFileSelect={handleFileSelect} />
+        <div className="w-full max-w-[500px] mx-auto p-8 space-y-6">
+            <h1 className="text-2xl font-bold">Upload an HTML File</h1>
+            <div>
+                <FileUploader onFileSelect={handleFileSelect} />
 
-            {loading && <p className="mt-4 text-blue-600">Analyzing file...</p>}
-            {error && <p className="mt-4 text-red-600">{error}</p>}
+                {loading && <p className="mt-4 text-blue-600">Analyzing file...</p>}
+                {error && <p className="mt-4 text-red-600">{error}</p>}
+            </div>
 
-            {accessibilityScore !== null && (
-                <div className="w-full max-w-[500px] mt-6">
-                    <h2 className="text-lg font-semibold">Accessibility Score</h2>
-                    <p
-                        className={cn('text-2xl font-bold', accessibilityScore >= 80
-                            ? 'text-green-600'
-                            : accessibilityScore >= 50
-                                ? 'text-yellow-600'
-                                : 'text-red-600'
-                        )}
-                    >
-                        {accessibilityScore}%
-                    </p>
-                </div>
-            )}
-            {accessibilityScore !== null && summary?.summary !== undefined && (
-                <ScoreDisplay score={accessibilityScore} summary={summary.summary} />
-            )}
+            <div className='w-full space-y-[24px]'>
+                {accessibilityScore !== null && summary?.summary !== undefined && !loading && (
+                    <ScoreDisplay score={accessibilityScore} summary={summary.summary} />
+                )}
 
-            {issues.length > 0 && (
-                <IssuesList issues={issues} />
-            )}
+                {issues.length > 0 && !loading && (
+                    <IssuesList issues={issues} />
+                )}
+            </div>
         </div>
     );
 };

@@ -13,8 +13,8 @@ export const FileUploader: React.FC<FileUploaderProps> = ({ onFileSelect }) => {
     const onDrop = useCallback((acceptedFiles: File[]) => {
         if (acceptedFiles.length > 0) {
             const file = acceptedFiles[0];
-            setFileName(file.name); // Update the file name state
-            onFileSelect(file); // Pass the file to parent
+            setFileName(file.name);
+            onFileSelect(file);
         }
     }, [onFileSelect]);
 
@@ -42,14 +42,13 @@ export const FileUploader: React.FC<FileUploaderProps> = ({ onFileSelect }) => {
                         ? 'Drop the HTML file here'
                         : 'Drag and drop an HTML file here, or click to select'}
                 </p>
+                {/* Display the name of the uploaded file */}
+                {fileName && (
+                    <p className="mt-4 text-sm text-gray-700">
+                        <strong>Uploaded File:</strong> {fileName}
+                    </p>
+                )}
             </div>
-
-            {/* Display the name of the uploaded file */}
-            {fileName && (
-                <p className="mt-4 text-sm text-gray-700">
-                    <strong>Uploaded File:</strong> {fileName}
-                </p>
-            )}
         </div>
     );
 };

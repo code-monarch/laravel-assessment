@@ -14,13 +14,14 @@ export type PageProps<
 };
 
 export interface AccessibilityIssue {
-    type: string;
-    element: string;
-    message: string;
-    severity: 'error' | 'warning';
-    line: number;
-    column: number;
-    suggestion: string;
+    element: string
+    message: string
+    type: "warning" | 'error'
+    wcagRef: {
+        id: string
+        level: "A" | "AA" | "AAA"
+        url: string
+    }
 }
 
 export interface AnalysisResult {
@@ -28,7 +29,7 @@ export interface AnalysisResult {
     issues: AccessibilityIssue[];
     summary: {
         errors: number;
+        totalIssues: number;
         warnings: number;
-        total: number;
     };
 }

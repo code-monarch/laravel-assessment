@@ -21,23 +21,48 @@ class ColorContrastRule implements AccessibilityRuleInterface
                     $color = $this->extractStyleProperty($style, 'color');
                     $backgroundColor = $this->extractStyleProperty($style, 'background-color');
 
-                    if ($color && $backgroundColor) {
-                        $contrastRatio = $this->calculateContrastRatio(
-                            $this->hexToRgb($color),
-                            $this->hexToRgb($backgroundColor)
-                        );
+                    // Debugging: Log extracted styles
+                    if (!$color || !$backgroundColor) {
+                        $issues[] = [
+                            'type' => 'warning',
+                            'message' => sprintf(
+                                'Unable to extract color or background-color from style: "%s"',
+                                $style
+                            ),
+                            'element' => $element->getNodePath()
+                        ];
+                        continue;
+                    }
 
-                        if ($contrastRatio < self::MIN_CONTRAST_RATIO) {
-                            $issues[] = [
-                                'type' => 'error',
-                                'message' => sprintf(
-                                    'Insufficient color contrast (%.2f). Minimum required: %.1f',
-                                    $contrastRatio,
-                                    self::MIN_CONTRAST_RATIO
-                                ),
-                                'element' => $element->getNodePath()
-                            ];
-                        }
+                    $rgbColor = $this->hexToRgb($color);
+                    $rgbBackgroundColor = $this->hexToRgb($backgroundColor);
+
+                    // Debugging: Log color parsing results
+                    if (!$rgbColor || !$rgbBackgroundColor) {
+                        $issues[] = [
+                            'type' => 'warning',
+                            'message' => sprintf(
+                                'Invalid color format. Color: "%s", Background-color: "%s"',
+                                $color,
+                                $backgroundColor
+                            ),
+                            'element' => $element->getNodePath()
+                        ];
+                        continue;
+                    }
+
+                    $contrastRatio = $this->calculateContrastRatio($rgbColor, $rgbBackgroundColor);
+
+                    if ($contrastRatio < self::MIN_CONTRAST_RATIO) {
+                        $issues[] = [
+                            'type' => 'error',
+                            'message' => sprintf(
+                                'Insufficient color contrast (%.2f). Minimum required: %.1f',
+                                $contrastRatio,
+                                self::MIN_CONTRAST_RATIO
+                            ),
+                            'element' => $element->getNodePath()
+                        ];
                     }
                 }
             }

@@ -18,7 +18,7 @@ class AccessibilityAnalyzerTest extends TestCase
 
         // Mock the Rule object (the object that would be returned by getRules())
         /** @var \App\Services\Rules\Rule|Mockery\MockInterface $ruleMock */
-        $ruleMock = Mockery::mock('App\Services\Rules\Rule'); // Replace with the actual rule class
+        $ruleMock = Mockery::mock('App\Services\Rules\Rule');
         $ruleMock->shouldReceive('check')
             ->andReturn([ // This simulates what the check method returns
                 ['type' => 'error', 'message' => 'Image missing alt attribute', 'element' => 'img'],
@@ -27,7 +27,7 @@ class AccessibilityAnalyzerTest extends TestCase
 
         // Define the behavior of getRules()
         $ruleRegistryMock->shouldReceive('getRules')
-            ->andReturn([$ruleMock]); // Return an array with the mocked rule
+            ->andReturn([$ruleMock]);
 
         // Mock the AccessibilityScoreCalculator
         /** @var AccessibilityScoreCalculator|Mockery\MockInterface $scoreCalculatorMock */
@@ -39,7 +39,7 @@ class AccessibilityAnalyzerTest extends TestCase
                 ['type' => 'error', 'message' => 'Image missing alt attribute', 'element' => 'img'],
                 ['type' => 'warning', 'message' => 'Skipped heading level: from h1 to h3', 'element' => 'h3']
             ])
-            ->andReturn(80); // Return a score of 80 (or whatever score you expect)
+            ->andReturn(80);
 
         // Create an instance of AccessibilityAnalyzer with the mocked dependencies
         $analyzer = new AccessibilityAnalyzer($ruleRegistryMock, $scoreCalculatorMock);

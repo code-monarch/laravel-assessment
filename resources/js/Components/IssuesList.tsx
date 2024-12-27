@@ -1,38 +1,55 @@
 import { FC } from 'react';
 import { ExclamationCircleIcon, ExclamationTriangleIcon } from '@heroicons/react/24/outline';
 import { AccessibilityIssue } from '@/types';
+import { cn } from '@/lib/utils';
 
 interface IssuesListProps {
     issues: AccessibilityIssue[];
 }
 
 export const IssuesList: FC<IssuesListProps> = ({ issues }) => {
+    console.log("ISSUES: ", issues)
     return (
-        <div className="mt-6">
+        <div className='w-full'>
             <h2 className="text-lg font-semibold mb-4">Accessibility Issues</h2>
             <div className="space-y-4">
                 {issues.map((issue, index) => (
                     <div
                         key={index}
-                        className={`p-4 rounded-lg ${issue.severity === 'error' ? 'bg-red-50' : 'bg-yellow-50'
-                            }`}
-                    >
-                        {issue.severity === 'error' ? (
-                            <ExclamationCircleIcon className="h-5 w-5 text-red-400 inline-block mr-2" />
-                        ) : (
-                            <ExclamationTriangleIcon className="h-5 w-5 text-yellow-400 inline-block mr-2" />
+                        className={cn("w-full p-4 rounded-lg",
+                            issue.type === 'error' ? 'bg-red-50' : '',
+                            issue.type === 'warning' ? 'bg-yellow-50' : ''
                         )}
-                        <div className="mt-2">
+                    >
+                        <div className='flex items-start gap-2'>
+                            {issue.type === 'error' ? (
+                                <span>
+                                    <ExclamationCircleIcon className="h-5 w-5 text-black inline-block" />
+                                </span>
+                            ) : (
+                                <span>
+                                    <ExclamationTriangleIcon className="h-5 w-5 text-black inline-block" />
+                                </span>
+                            )}
                             <p className="font-medium">{issue.message}</p>
-                            <p className="text-sm text-gray-600 mt-1">
+                        </div>
+
+                        <div className="mt-2 flex flex-col justify-start items-start gap-2">
+                            <p className="text-sm text-gray-600">
                                 Element: <code className="bg-gray-100 px-1 rounded">{issue.element}</code>
                             </p>
-                            <p className="text-sm text-gray-600">
-                                Location: Line {issue.line}, Column {issue.column}
-                            </p>
-                            {issue.suggestion && (
-                                <p className="text-sm text-gray-600 mt-2">
-                                    Suggestion: {issue.suggestion}
+                            {issue.wcagRef?.level && (
+                                <a href={issue.wcagRef?.url} className="text-sm text-gray-600">
+                                    WCAG level: {issue.wcagRef?.level}
+                                </a>
+                            )}
+
+                            {issue.wcagRef?.url && (
+                                <p className="w-full flex items-start gap-1 text-sm text-gray-600">
+                                    <span className='text-nowrap'>Reference URL:</span>
+                                    <a href={issue.wcagRef?.url} className="max-w-[150px] underline text-xs whitespace-pre-wrap">
+                                        {issue.wcagRef?.url}
+                                    </a>
                                 </p>
                             )}
                         </div>

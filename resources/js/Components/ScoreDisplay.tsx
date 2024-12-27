@@ -1,3 +1,4 @@
+import { cn } from '@/lib/utils';
 import { AnalysisResult } from '@/types';
 import { FC } from 'react';
 
@@ -9,10 +10,10 @@ export const ScoreDisplay: FC<Pick<AnalysisResult, 'summary' | 'score'>> = ({ sc
     };
 
     return (
-        <div className="bg-white p-6 mt-4 rounded-lg shadow-sm">
+        <div className="bg-white p-6 rounded-lg shadow-sm">
             <div className="text-center">
                 <h2 className="text-2xl font-bold mb-2">Accessibility Score</h2>
-                <p className={`text-4xl font-bold ${getScoreColor(score)}`}>
+                <p className={cn("text-4xl font-bold", getScoreColor(score))}>
                     {score.toFixed(1)}%
                 </p>
             </div>
@@ -27,7 +28,7 @@ export const ScoreDisplay: FC<Pick<AnalysisResult, 'summary' | 'score'>> = ({ sc
                 </div>
                 <div>
                     <p className="text-sm text-gray-500">Total Issues</p>
-                    <p className="text-xl font-semibold">{summary.total ?? "-"}</p>
+                    <p className="text-xl font-semibold">{summary.totalIssues ?? "-"}</p>
                 </div>
             </div>
         </div>
