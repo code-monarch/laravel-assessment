@@ -7,7 +7,7 @@ RUN composer install --no-dev --optimize-autoloader
 # Install Node.js and dependencies for the React frontend
 FROM node:20-alpine AS frontend-deps
 WORKDIR /app/resources/js
-COPY /package.json /package-lock.json ./
+COPY src/package.json src/package-lock.json ./
 RUN npm install -g npm && npm install --frozen-lockfile
 
 # Build the frontend assets (Inertia.js with React)
