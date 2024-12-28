@@ -1,8 +1,16 @@
+version: "3.9"
 services:
   app:
-    build: ./docker
-    # --- Enable the following if using Laravel Vite ---
-    ports:
-      - 5173:5173
+    build:
+      context: .
+      dockerfile: Dockerfile
     volumes:
-      - ./src:/project
+      - ./src:/app
+    environment:
+      - APP_ENV=production
+      - APP_KEY=${APP_KEY}
+    ports:
+      - "3000:3000"
+
+volumes:
+  db_data:

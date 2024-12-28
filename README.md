@@ -38,14 +38,14 @@ git clone https://github.com/code-monarch/laravel-assessment
 cd laravel-assessment
 ```
 
-2. Install PHP dependencies:
+2. Build the Docker Image:
 ```bash
-composer install
+docker build -t accessibility-app:1.0 .
 ```
 
-3. Install Node.js dependencies:
+3. Run the Docker Container:
 ```bash
-npm install
+docker run -d -p 3000:3000 accessibility-app:1.0
 ```
 
 4. Configure environment:
