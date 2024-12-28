@@ -1,0 +1,8 @@
+services:
+  app:
+    build: ./docker
+    # --- Enable the following if using Laravel Vite ---
+    ports:
+      - 5173:5173
+    volumes:
+      - ./src:/project

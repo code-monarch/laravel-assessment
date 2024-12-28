@@ -15,15 +15,15 @@ class AccessibilityController extends Controller
     {
         // Validate the uploaded file
         $request->validate([
-            'file' => 'required|file|mimes:html,htm', // Allow only HTML files
+            'file' => 'required|file|mimes:html,htm',
         ]);
 
         // Read the content of the uploaded file
         $content = file_get_contents($request->file('file')->path());
 
         // Instantiate required dependencies
-        $ruleRegistry = app(RuleRegistry::class); // Resolve RuleRegistry from the container
-        $scoreCalculator = app(AccessibilityScoreCalculator::class); // Resolve AccessibilityScoreCalculator from the container
+        $ruleRegistry = app(RuleRegistry::class);
+        $scoreCalculator = app(AccessibilityScoreCalculator::class);
 
         // Create an instance of AccessibilityAnalyzer
         $analyzer = new AccessibilityAnalyzer($ruleRegistry, $scoreCalculator);

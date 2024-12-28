@@ -61,7 +61,6 @@ class AccessibilityAnalyzerTest extends TestCase
                         'message' => 'Skipped heading level: from h1 to h3',
                         'element' => '/html/body/h3',
                     ],
-                    // Include additional expected issues if necessary
                 ],
             ]);
     }

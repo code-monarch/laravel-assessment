@@ -4,7 +4,6 @@ import { FC, useState } from 'react';
 import { FileUploader } from '@/Components/FileUploader';
 import { IssuesList } from '@/Components/IssuesList';
 import { AccessibilityIssue, AnalysisResult } from '@/types';
-import { cn } from '@/lib/utils';
 import { analyzeHtml } from '@/services/api';
 import { ScoreDisplay } from '@/Components/ScoreDisplay';
 

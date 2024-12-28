@@ -6,7 +6,7 @@ use App\Services\AccessibilityAnalyzer;
 use App\Services\Rules\RuleRegistry;
 use App\Services\Scoring\AccessibilityScoreCalculator;
 use PHPUnit\Framework\TestCase;
-use Mockery; // Make sure Mockery is imported
+use Mockery;
 
 class AccessibilityAnalyzerTest extends TestCase
 {
@@ -35,7 +35,7 @@ class AccessibilityAnalyzerTest extends TestCase
 
         // Set up the expectation for the calculate() method to return a specific score
         $scoreCalculatorMock->shouldReceive('calculate')
-            ->with([ // Pass in the issues array
+            ->with([
                 ['type' => 'error', 'message' => 'Image missing alt attribute', 'element' => 'img'],
                 ['type' => 'warning', 'message' => 'Skipped heading level: from h1 to h3', 'element' => 'h3']
             ])
@@ -62,8 +62,8 @@ class AccessibilityAnalyzerTest extends TestCase
         $result = $analyzer->analyze($html);
 
         // Example assertion, modify as per actual logic
-        $this->assertEquals(80, $result['score']); // Adjust based on your actual expected score
-        $this->assertCount(2, $result['issues']); // Ensure there are 2 issues (error and warning)
+        $this->assertEquals(80, $result['score']);
+        $this->assertCount(2, $result['issues']);
     }
 
     protected function tearDown(): void
