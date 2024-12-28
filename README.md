@@ -38,14 +38,14 @@ git clone https://github.com/code-monarch/laravel-assessment
 cd laravel-assessment
 ```
 
-2. Build the Docker Image:
+2. Install PHP dependencies:
 ```bash
-docker build -t accessibility-app:1.0 .
+composer install
 ```
 
-3. Run the Docker Container:
+3. Install Node.js dependencies:
 ```bash
-docker run -d -p 3000:3000 accessibility-app:1.0
+npm install
 ```
 
 4. Configure environment:
@@ -55,8 +55,13 @@ php artisan key:generate
 ```
 
 5. Start development servers:
+In 1st terminal (Laravel): 
 ```bash
-composer run dev 
+php artisan serve
+```
+And in 2nd one (Vite):
+```bash
+npm run dev
 ```
 
 ## Architecture
