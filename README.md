@@ -57,11 +57,7 @@ php artisan key:generate
 5. Start development servers:
 In 1st terminal (Laravel): 
 ```bash
-php artisan serve
-```
-And in 2nd one (Vite):
-```bash
-npm run dev
+composer run dev
 ```
 
 ## Architecture
